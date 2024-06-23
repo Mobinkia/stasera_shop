@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stasera</title>
+    <link rel="icon" type="image/x-icon" href="{% static 'media/main/sign/a.png' %}">
+    <script>
+        var  user='{{request.user}}';
+        var loggedin=true;
+        var isref=true;
+        if(user=='AnonymousUser'){loggedin=false}
+        function getToken(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    const csrftoken = getToken('csrftoken');
+      </script>
+</head>
+<body>
+  <header>
+    <div id="header_content">
+        <div id="header_logo"><a href="{% url 'store' %}"></a></div>
+        <div id="icon_contain">
+            <span id="user_button" class="button" onclick="show_menu()">
+                <div id="user_submenu" class="clear">
+                    <ul>
+                        <li><a href="{% url 'cart' %}"><p>سبد خرید</p><span style="background: url({% static 'media/main/sign/Cart.png' %})"></span></a></li>
+                        <li><a href="{% url 'history' %}"><p>سوابق سفارش</p><span style="background: url({% static 'media/main/sign/records.png' %})"></span></a></li>
+                        <li><a href="{% url 'profile' %}"><p>پروفایل</p><span style="background: url({% static 'media/main/sign/profile.png' %})"></span></a></li>
+                        <li><a href="{% url 'logout' %}"><p>خروج</p><span style="background: url({% static 'media/main/sign/door.png' %})"></span></a></li>
+                    </ul>
+                </div>
+            </span>
+            <a id="login" class="button" href="{% url 'login' %}"></a>
+            <span id="menu_button" class="button" onclick="show_menu1()">
+                <div id="user_submenu1" class="clear">
+                    <ul>
+                        {% for category in categories %}
+                        <li><a href="{% url 'products' %}{{category.id}}/"><p>{{category.name}}</p><span style="background: url({{category.icon.url}})"></span></a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </span>
+        </div>
+    </div>
+  </header>  
+  <main>
+    {% block content %}
+    {% endblock content %}
+  </main>
+  <footer>
+    <div id="footer_logo"></div>
+    <div id="link_list">
+        <ul>
+            <li><a href="#">ارتباط با ما</a></li>
+            <li><a href="#">تاریخچه سفارشات</a></li>
+            <li><a href="#">رسیدگی به شکایات</a></li>
+            <li><a href="#">لیست مورد علاقه ها</a></li>
+            <li><a href="#">خبر ها</a></li>
+            <li><a href="#">آدرس</a></li>
+            <li><a href="#">نظرات</a></li>
+            <li><a href="#">صفحه شخصی</a></li>
+        </ul>
+    </div>
+    <div id="social">
+        <ul>
+            <li style="background-image: url({% static 'media/footer/tellegram.png' %});"><a href="#"></a></li>
+            <li style="background-image: url({% static 'media/footer/linkedin.png' %});"><a href="#"></a></li>
+            <li style="background-image: url({% static 'media/footer/instagram.png' %});"><a href="#"></a></li>
+            <li style="background-image: url({% static 'media/footer/facebook.png' %});"><a href="#"></a></li>
+        </ul>
+    </div>
+
+  </footer>
+  
+</body>
+<style>
+@font-face{
+    font-family: Arabic;
+    src: url({% static 'media/fonts/AdobeArabic/AdobeArabic-Regular.otf' %});
+}
+@font-face{
+    font-family: freestyle;
+    src: url({% static 'media/fonts/FREESCPT.TTF' %});
+}
+.freestyle{
+    font-family: freestyle;
+    font-weight: 400;
+}
+*{
+    padding: 0;
+    margin: 0;
+    color: #322C2B;
+}
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration:none; 
+    cursor:pointer;  
+}
+.button{
+    display: block;
+    cursor: pointer;
+}
+header{
+    width: 100%;
+    height: 55px;
+    padding: 2px;
+}
+#header_content{
+    width: 98%;
+    height: 100%;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}   
+#header_logo{
+    width: 14%;
+    min-width: 140px;
+    height: 100%;
+    background: url({% static 'media/header/logo_header.png' %});
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+#header_logo > a{
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+#icon_contain{
+    width: 5%;
+    min-width: 60px;
+    height: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+#icon_contain > .button{
+    width: 36%;
+    aspect-ratio: 1;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+#user_button{
+    position: relative;
+    transition: ease 0.5s;
+    background:url({% static 'media/header/account.png' %});
+}
+#login{
+    position: relative;
+    transition: ease 0.5s;
+    background:url({% static 'media/main/sign/door.png' %});
+}
+#menu_button{
+    position: relative;
+    transition: ease 0.5s;
+    background:url({% static 'media/header/hamburger.png' %});
+
+}
+#user_submenu{
+    position: absolute;
+    right: 0;
+    top: 110%;
+    z-index: 10;
+    background-color: white;
+    border-radius: 8%;
+    border-top-right-radius: 0;
+    box-shadow: 0 0 20px 4px rgb(130, 129, 129);
+    transition: ease-in 0.3s;
+}
+#user_submenu>ul{
+    list-style: none;
+}
+#user_submenu>ul>li{
+    height: 2.5vw;
+    min-height: 20px;
+    aspect-ratio: 3/1;
+    transition: ease-in 0.3s;
+}
+
+#user_submenu>ul>li:hover{
+    background-color: #dedede;
+}
+#user_submenu>ul>li>a{
+    display: block;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    font-family: Arabic;
+
+}
+#user_submenu>ul>li>a>span{
+    display: block;
+    width: 18%;
+    aspect-ratio: 1;
+    margin-right: 3%;
+    background-position: center !important;
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+}
+#user_submenu>ul>li>a>p{
+    font-size: 1.3vw;
+    margin-right: 3%;   
+}
+#icon_contain .active{
+    background-color: lightgray;
+    border-radius: 100%;
+}
+.show{
+    animation: show 0.2s ease-in;
+    display: block !important;
+    overflow: hidden;
+}
+@keyframes show {
+    0%{
+        height: 0;
+    }
+    100%{
+        height: 500%;
+    }
+}
+.clear{
+    display: none;
+}
+/* ...................... */
+#user_submenu1{
+    position: absolute;
+    right: 0;
+    top: 110%;
+    z-index: 10;
+    background-color: white;
+    border-radius: 8%;
+    border-top-right-radius: 0;
+    box-shadow: 0 0 20px 4px rgb(130, 129, 129);
+    transition: ease-in 0.3s;
+}
+#user_submenu1>ul{
+    list-style: none;
+}
+#user_submenu1>ul>li{
+    height: 2.5vw;
+    min-height: 20px;
+    aspect-ratio: 3/1;
+    transition: ease-in 0.3s;
+}
+
+#user_submenu1>ul>li:hover{
+    background-color: #dedede;
+}
+#user_submenu1>ul>li>a{
+    display: block;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    font-family: Arabic;
+
+}
+#user_submenu1>ul>li>a>span{
+    display: block;
+    width: 18%;
+    aspect-ratio: 1;
+    margin-right: 3%;
+    background-position: center !important;
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+}
+#user_submenu1>ul>li>a>p{
+    font-size: 1.3vw;
+    margin-right: 3%;   
+}
+footer{
+    width: 100%;
+    height: 30vw;
+    background-color: #803D3B;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#footer_logo{
+    width: 40%;
+    aspect-ratio: 6/2;
+    background-color: blue;
+    margin-left: 7%;
+    background: url({% static "media/footer/logotype.png" %});
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+#link_list{
+    width: 25%;
+    aspect-ratio: 15/10;
+}
+#link_list>ul{
+    display: grid;
+    grid-template-rows: auto auto auto auto;
+    grid-template-columns: auto auto ;
+    list-style: none;
+    width: 100%;
+    height: 100%;
+}
+#link_list>ul>li{
+    text-align: right;
+}
+#link_list>ul>li>a{
+    font-family: Arabic;
+    text-align: right;
+    font-size: 2vw;
+    color: #E4C59E;
+}
+#social{
+    width: 4%;
+    aspect-ratio: 22/100;
+    margin-right: 1%;
+}
+#social>ul{
+    list-style: none;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+}
+#social>ul>li{
+    width: 100%;
+    aspect-ratio: 1/1;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 20%;
+}
+#social>ul>li>a{
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 20%;
+
+}
+</style>
+<script>
+    var user_button=document.getElementById("user_button");
+    var sub_menu=document.getElementById("user_submenu");
+    var user_button1=document.getElementById("menu_button");
+    var sub_menu1=document.getElementById("user_submenu1");
+    var slider1=document.getElementById("slider")
+    var activated_menu=false;
+    var activated_menu1=false;
+    function show_menu(){
+        console.log("s")
+        if (activated_menu==false){
+            activated_menu=true;
+        sub_menu.classList.add("show");
+        sub_menu.classList.remove("clear");
+        user_button.classList.add("active");
+        close_menu1()
+
+    }else{
+        activated_menu=false;
+        sub_menu.classList.add("clear");
+        sub_menu.classList.remove("show");
+        user_button.classList.remove("active");
+        }
+    }
+    function close_menu(){
+        activated_menu=false;
+        sub_menu.classList.add("clear");
+        sub_menu.classList.remove("show");
+        user_button.classList.remove("active");
+    }
+    function show_menu1(){
+        if (activated_menu1==false){
+        activated_menu1=true;
+        sub_menu1.classList.add("show");
+        sub_menu1.classList.remove("clear");
+        user_button1.classList.add("active");
+        close_menu()
+    }else{
+        activated_menu1=false;
+        sub_menu1.classList.add("clear");
+        sub_menu1.classList.remove("show");
+        user_button1.classList.remove("active");
+        }}
+    function close_menu1(){
+        activated_menu1=false;
+        sub_menu1.classList.add("clear");
+        sub_menu1.classList.remove("show");
+        user_button1.classList.remove("active");
+    }
+    if (loggedin){document.getElementById("login").style.display='none';}
+    else{document.getElementById("user_button").style.display='none';}
+    cart_buttons=document.getElementsByClassName("cart_button");
+    console.log();
+    for(i=0;i<cart_buttons.length;i=i+1){
+        cart_buttons[i].addEventListener('click',function(){
+            var ProductId=this.dataset.productid;
+            var action=this.dataset.action;
+            if(loggedin){
+                updateUserOrder(ProductId,action)
+            }else{
+                console.log('redirected to the login panel')
+            }
+        })
+    }
+    function updateUserOrder(ProductId,action){
+        var url='/update_item/';
+        fetch(url,{
+            method:'post',headers:{'Content_Type':'application/json','X-CSRFToken':csrftoken},body:JSON.stringify({'ProductId':ProductId,'action':action})
+
+            })
+        .then((response)=>{
+            return response.json()
+        })
+        .then((data)=>{
+            console.log('data:',data)
+            if(isref){
+                location.reload();
+            }
+        })
+    }
+   
+</script>
+</html>
