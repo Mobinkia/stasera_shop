@@ -26,5 +26,20 @@ def store(request):
     return render(request,'store/store.html',context)
 @login_required(login_url='login')
 
+def cart(request):
+    if request.user.is_authenticated:
+        customer=request.user.customer
+        order,created=Order.objects.get_or_create(customer=customer,compelete=False)
+        items=order.orderitem_set.all()
+        cartItems=order.get_cart_items
+    else:
+        items=[]
+        order={'get_cart_total':0,'get_cart_items':0}
+        cartItems=order['get_cart_items']
+    categories=Category.objects.all()
+    context={'items':items,'order':order,'cartItems':cartItems,'categories':categories}
+    return render(request,'store/cart.html',context)
+@login_required(login_url='login')
+
 
 # Create your views here.
