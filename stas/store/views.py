@@ -146,5 +146,20 @@ def products(request,id):
     else:
         return redirect('store')
 
+def panel(request):
+    if request.user.is_superuser:
+        categories=Category.objects.all()
+        datas=[]
+        i=-1
+        for sp_category in Category.objects.all():
+            datas.append({})
+            i+=1
+            for sp_order_item in OrderItem.objects.all():
+                if sp_order_item.product.category==sp_category:
+                    if sp_order_item.date_aded.day in datas[i].keys():
+                        datas[i][sp_order_item.date_aded.day]+=sp_order_item.quantity
+                    else:
+                        datas[i][sp_order_item.date_aded.day]=sp_order_item.quantity
+
 
 # Create your views here.
