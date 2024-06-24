@@ -102,5 +102,24 @@ def logout_page(request):
     logout(request)
     return redirect('store')
 
+def updateItem(request):
+    data=json.loads(request.body)
+    ProductID=data['ProductId']
+    action=data['action']
+    print("-------------")
+    print(ProductID)
+    print(action)
+    customer=request.user.customer
+    product=Product.objects.get(id=ProductID)
+    order,created=Order.objects.get_or_create(customer=customer,compelete=False)
+    orderItem,created=OrderItem.objects.get_or_create(order=order,product=product)
+    if action=='add':
+        orderItem.quantity=(orderItem.quantity+1)
+    elif action=='remove':
+        orderItem.quantity=(orderItem.quantity-1)
+    orderItem.save()
+    if orderItem.quantity<=0:orderItem.delete()
+    return JsonResponse("item added",safe=False)
+
 
 # Create your views here.
