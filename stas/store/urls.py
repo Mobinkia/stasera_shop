@@ -14,5 +14,6 @@ urlpatterns = [
     path('panel/', views.panel,name='panel'),
     path("products/<id>/", views.products, name ="idproducts"),
     path('addproduct/', views.addproduct,name='addproduct'),
+    path('show/', views.show,name='show'),
     
 ]
