@@ -121,5 +121,12 @@ def updateItem(request):
     if orderItem.quantity<=0:orderItem.delete()
     return JsonResponse("item added",safe=False)
 
+def history(request):
+    categories=Category.objects.all()
+    cusromer=Customer.objects.filter(name=request.user.username).first()
+    orders=Order.objects.filter(customer=cusromer,compelete=True)
+    context={'categories':categories,'orders':orders}
+    return render(request,'store/history.html',context) 
+
 
 # Create your views here.
