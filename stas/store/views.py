@@ -134,5 +134,17 @@ def profile(request):
     context={'categories':categories,'customer':cusromer}
     return render(request,'store/profile.html',context)
 
+def products(request,id):
+    id=int(id)
+    category_products=[]
+    categories=Category.objects.all()
+    if id<=len(categories) and id>0:
+        for product in Product.objects.all():
+            if int(product.category.id)==id:category_products.append(product)
+        context={'category_products':category_products,'categories':categories,'id':id}
+        return render(request,'store/products.html',context)
+    else:
+        return redirect('store')
+
 
 # Create your views here.
