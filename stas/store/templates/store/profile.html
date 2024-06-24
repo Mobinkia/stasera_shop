@@ -1,0 +1,39 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+<div id="table_con">
+    <table>
+        <tr>
+            <td style="border-bottom: 2px solid #803D3B;">{{customer.name}}</td>
+            <th style="border-bottom: 2px solid #803D3B;">:نام کاربری</th>
+        </tr>
+        <tr>
+            <td>{{customer.email}}</td>
+            <th>:ایمیل</th>
+        </tr>
+    </table>
+</div>
+<style>
+
+
+
+
+    th, td{
+        padding: 10px;
+        color: #322C2B;
+
+    }
+    table, th, td{
+        font-family: Arabic;
+        font-size: 3vw;
+    }
+    th{
+        text-align:right ;
+    }
+    td{
+        font-family: sans-serif;
+        font-size: 2vw;
+    }
+    
+</style>
+{% endblock content %}
