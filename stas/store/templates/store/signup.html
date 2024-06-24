@@ -1,0 +1,149 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+<div>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <div id="image_contain">
+        <span></span>
+        <button type="submit">ثبت نام</button>
+    </div>
+    <div id="form">
+        <h1>ساخت حساب کاربری</h1>
+        <form id="rg_form" method="POST" action="">
+            {% csrf_token %}
+            {{form.username}}
+            {{form.email}}
+            {{form.password1}}
+            {{form.password2}}
+            <div id="err">{{form.errors}}</div>
+            <div id="err2" style="display: none;">something wnt wrong</div>
+            <input type="submit" name="Create User"> 
+        </form>
+    </div>
+</div>
+<style>
+    main > div{
+    width: 100%;
+    aspect-ratio:9/4;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+main > div >span{
+    width: 80%;
+    display: block;
+    aspect-ratio: 120/1;
+    position: absolute;
+    background-color: yellowgreen;
+}
+main > div >span:nth-child(1){
+    right: 0;
+    top: 0;
+    background-color: #803D3B;
+}
+main > div >span:nth-child(2){
+    left: 0;
+    top: 3%;
+    background-color: #AF8260;
+}
+main > div >span:nth-child(3){
+    right: 0;
+    bottom: 3%;
+    background-color: #322C2B;
+}
+main > div >span:nth-child(4){
+    left: 0;
+    bottom: 0;
+    background-color: #E4C59E;
+}
+#image_contain{
+ width: 30%;
+ height: 80%;
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ align-items: center;
+ margin-right: 7%;
+}
+#image_contain>span{
+    display: block;
+    width: 100%;
+    aspect-ratio: 1;
+    background: url({% static "media/head.png" %});
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+#image_contain>button{
+    width: 100%;
+    height: 10%;
+    border-radius: 20px;
+    border: none;
+    background-color: #AF8260;
+    font-family: Arabic;
+    font-size: 2vw;
+    color: white;
+    cursor: pointer;
+}
+
+#form{
+ width: 35%;
+ height: 80%;
+ display: flex;
+ flex-direction: column;
+ justify-content: space-between;
+ align-items: center;
+}
+#form > h1{
+    height: 10%;
+    font-family: Arabic;
+    font-size: 5vw;
+}
+#form > form{
+    width: 100%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+#form > form>input{
+    width: 100%;
+    height: 14%;
+    border-radius: 27px;
+    font-family: Arabic;
+    font-size: 2vw;
+    direction: rtl;
+    background-color: #E4C59E;
+    border: none;
+    padding-right: 3%;
+    color: #322C2B;
+}
+#form > form>input::placeholder{
+    color: #756664;
+}
+#form > form>input:focus{
+    border: none;
+    outline: none;
+}
+</style>
+<script>
+    var rg_form=document.getElementById('rg_form')
+    // rg_form[1].placeholder="نام و نام خانوادگی"
+    rg_form[1].placeholder="نام کاربری"
+    rg_form[2].placeholder="ایمیل"
+    rg_form[3].placeholder="گذرواژه"
+    rg_form[4].placeholder="تکرار گذرواژه"
+    var err=document.getElementById('err')
+    var err2=document.getElementById('err2')
+    if(err.innerHTML!=''){
+        err2.style.display='block';
+    }
+</script>
+{% endblock content %}
