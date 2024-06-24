@@ -161,5 +161,19 @@ def panel(request):
                     else:
                         datas[i][sp_order_item.date_aded.day]=sp_order_item.quantity
 
+def addproduct(request):
+    if request.user.is_superuser:
+        if request.method=='GET':
+            categories=Category.objects.all()
+            context={'categories':categories}
+            return render(request,'store/addproduct.html',context)   
+        if request.method=='POST':
+            cat=Category.objects.get(name=request.POST.get('category'))
+            img=request.FILES.get('image')
+            Product.objects.create(name=request.POST.get('name'),category=cat,price=request.POST.get('price'),sugar=request.POST.get('sugar'),coffee=request.POST.get('coffee'),flour=request.POST.get('flour'),chocolate=request.POST.get('chocolate'),image=img)
+            return redirect('show')
+    else:
+        return HttpResponse(status=403)
+
 
 # Create your views here.
