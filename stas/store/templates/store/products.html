@@ -1,0 +1,167 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+<div id="cart_header_container">
+    <h1>{{category_name}}</h1>
+</div>
+<div id="item_con">
+    <ul>
+        {% for product in category_products %}
+            <li>
+                <h3>{{product.name}}</h3>
+                <p>{{product.price}}T</p>
+                <div class="circle">
+                    <span style="background-image: url({{product.image.url}});"></span>
+                    <button class="cart_button" data-productid={{product.id}} data-action="add" >افزودن به سبد خرید</button>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+
+<style>
+    #cart_header_container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#cart_header_container>h1{
+    font-size: 5.5vw;
+    font-family: Arabic;
+    position: relative;
+    font-weight: 200;
+}
+#cart_header_container::after{
+    content: "";
+    display: block;
+    width: 30%;
+    height: 1%;
+    background-color: #803D3B;
+    position: absolute;
+    left: 10%;
+}
+
+#cart_header_container::before{
+    content: "";
+    display: block;
+    width: 30%;
+    height: 1%;
+    background-color: #803D3B;
+    position: absolute;
+    right: 10%;
+}
+#item_con{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+#item_con>ul{
+    width: 80%;
+    list-style: none;
+    display: grid;
+    grid-template-columns: auto auto auto;
+}
+#item_con>ul>li{
+    width: 90%;
+    aspect-ratio: 1;
+    margin: 2%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    font-family: freestyle;
+}
+#item_con>ul>li>h3{
+    font-size: 4.4vw;
+    z-index: 5;
+    font-weight: 300;
+}
+#item_con>ul>li>p{
+    z-index: 5;
+    font-size: 2vw;    
+}
+
+.circle{
+    width: 60%;
+    aspect-ratio: 1;
+    border-radius: 100%;
+    background-color: #E4C59E;
+    position: absolute; 
+  left: 0; 
+  right: 0; 
+  top: 0;
+  bottom: 0;
+  margin-left: auto; 
+  margin-right: auto;
+  margin-top: auto;
+  margin-bottom: auto;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+.circle>span{
+    display: block;
+    position: absolute;
+    bottom: 0%;
+    width: 70%;
+    aspect-ratio: 5/6;
+    background-position-x: center;
+    background-position-y: bottom;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+.circle>button{
+    position: absolute;
+    bottom: -10%;
+    left: 0;
+    right: 0;
+    margin-right: auto;
+    margin-left: auto;
+    width: 60%;
+    height: 20%;
+    border: none;
+    border-radius: 20px;
+    background-color: #AF8260;
+    background-color: #803D3B ;
+    cursor: pointer;    
+    font-family: Arabic;
+    color: white;
+    font-size: 1.2vw;
+}
+.loading{
+    opacity: 50% ;
+    animation: pulse 0.5s ease infinite;
+}
+@keyframes pulse {
+    0%{
+        transform: scale(1);
+    }
+    50%{
+        transform: scale(1.06);
+    }
+    100%{
+        transform: scale(1);
+    }
+}
+</style>
+<script>
+    var rl=false
+    cart_buttons=document.getElementsByClassName("cart_button");
+    console.log(cart_buttons);
+    for(i=0;i<cart_buttons.length;i=i+1){
+        cart_buttons[i].addEventListener('click',function(){
+            var ele=this;
+            this.classList.add('loading');
+            this.disabled=true;
+            setTimeout(function(){
+                ele.classList.remove('loading');
+                ele.disabled=false;
+                console.log('finishllll')
+            },2000)
+            console.log(this);
+        })
+    }
+</script>
+{% endblock content %}
