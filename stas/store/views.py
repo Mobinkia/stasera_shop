@@ -41,5 +41,24 @@ def cart(request):
     return render(request,'store/cart.html',context)
 @login_required(login_url='login')
 
+def checkout(request):
+    categories=Category.objects.all()
+    customer=request.user.customer
+    order,created=Order.objects.get_or_create(customer=customer,compelete=False)
+    if request.method=='GET':
+        items=order.orderitem_set.all()
+        context={'items':items,'order':order,'categories':categories}
+        return render(request,'store/checkout.html',context)
+    elif request.method=='POST':
+        address=request.POST.get('address')
+        state=request.POST.get('state')
+        zipcode=request.POST.get('zipcode')
+        city=request.POST.get('city')
+        ShippingAddress.objects.create(address=address,state=state,zipcode=zipcode,city=city,customer=customer,order=order)
+        order.compelete=True
+        order.save()
+        Order.objects.create(customer=customer)
+        return redirect('store')
+
 
 # Create your views here.
