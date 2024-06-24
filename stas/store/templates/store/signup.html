@@ -8,7 +8,8 @@
     <span></span>
     <div id="image_contain">
         <span></span>
-        <button type="submit">ثبت نام</button>
+        <p>قبلا حساب کاربری ساخته اید؟</p>
+        <a type="submit" href="{% url 'login' %}">ورود </a>
     </div>
     <div id="form">
         <h1>ساخت حساب کاربری</h1>
@@ -19,8 +20,8 @@
             {{form.password1}}
             {{form.password2}}
             <div id="err">{{form.errors}}</div>
-            <div id="err2" style="display: none;">something wnt wrong</div>
-            <input type="submit" name="Create User"> 
+            <div id="err2" style="display: none; font-family: Arabic;font-size: 1.5vw;">ایرادات بالا را برطرف کنید</div>
+            <input type="submit" value="ثبت نام" style="background-color: #803D3B;color: white;" name="Create User"> 
         </form>
     </div>
 </div>
@@ -80,7 +81,10 @@ main > div >span:nth-child(4){
     background-size: contain;
     background-repeat: no-repeat;
 }
-#image_contain>button{
+#image_contain>a{
+    display: block;
+    text-align: center;
+    line-height: 180%;
     width: 100%;
     height: 10%;
     border-radius: 20px;
@@ -125,6 +129,10 @@ main > div >span:nth-child(4){
     padding-right: 3%;
     color: #322C2B;
 }
+#image_contain>p{
+    font-size: 2vw;
+    font-family: Arabic;
+}
 #form > form>input::placeholder{
     color: #756664;
 }
@@ -135,7 +143,6 @@ main > div >span:nth-child(4){
 </style>
 <script>
     var rg_form=document.getElementById('rg_form')
-    // rg_form[1].placeholder="نام و نام خانوادگی"
     rg_form[1].placeholder="نام کاربری"
     rg_form[2].placeholder="ایمیل"
     rg_form[3].placeholder="گذرواژه"
