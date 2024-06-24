@@ -1,0 +1,333 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+<div id="all">
+    <div id="content">  
+        <h2>افزودن محصول</h2>
+        <div id="con">
+            <form action="" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <div class="right">
+                    <input required type="text" name="name" placeholder="نام محصول">
+                    <select  name="category" id="" required>
+                        <option value="" disabled selected>دسته بندی</option>
+                        {% for category in categories %}
+                        <option name="" id="">{{category.name}}</option>
+                        {% endfor %}
+                    </select>
+                    <input id="price" type="number" name="price" min="0" max="500" placeholder="قیمت " required>
+                    <div>
+                        <label for="">
+                        <input type="number" name="sugar" min="0" max="10" value="0">
+                        شکر
+                        </label>
+                        <label for="">
+                        <input type="number" name="coffee" min="0" max="10" value="0">
+                            قهوه
+                        </label>
+                        <label for=""><input type="number" name="flour" min="0" max="10" value="0">
+                        آرد
+                        </label>
+                        
+                        <label for=""> <input type="number" name="chocolate" min="0" max="10" value="0">
+                        شکلات
+                        </label>
+                       
+                    </div>
+                </div>
+                <div class="left">
+                    <div>
+                    <label for="img">
+                        +
+                    </label>
+                    <input id="img" type="file" name="image">
+                    </div>
+                    <input type="submit" value="ثبت">
+                </div>
+            </form>
+        </div>
+        
+    </div>
+    <div id="menu">
+        <ul>
+            <li><a href="{% url 'panel' %}">داشبورد مدیریت</a></li>
+            <li><a href="{% url 'storage' %}">مدیریت انبار</a></li>
+            <li><a href="{% url 'show' %}">مشاهده محصولات</a></li>
+            <li class="active"><a href="{% url 'addproduct' %}">افزودن محصول</a></li>
+        </ul>
+    </div>
+</div>
+<style>
+    #all{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        height: 50vw;
+        margin-top: 2%;
+        margin-bottom: 2%;
+    }
+    #menu{
+        width: 20%;
+        height: 100%;
+        background-color: #E4C59E;
+        border-top-left-radius: 40px;
+        border-bottom-left-radius: 40px;
+        z-index: 5;
+        overflow: hidden;
+    }
+    #content{
+        width: 80%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+    }
+    #content>h2{
+        width: 100%;
+        background-color: #AF8260;
+        text-align: center;
+        font-family: Arabic;
+        font-size: 3vw;
+        font-weight: 300;
+        position: relative;
+    }
+    #content>h2::before{
+        content: "";
+        display: block;
+        position: absolute;
+        top: 0;
+        right: -5%;
+        width: 5%;
+        height: 100%;
+        background-color: #AF8260;
+
+    }
+    #menu > ul{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-end;
+        list-style: none;
+    }
+    #menu > ul > li{
+        width: 100%;
+        aspect-ratio: 5/1;
+        border-bottom: 1px solid ;
+        font-family: Arabic;
+        font-size: 2vw;
+    }
+    #menu > ul > li > a{
+        display: block;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        line-height: 400%;
+    }
+    li.active{
+        background-color: #cea574 !important;
+    }
+    #form{
+        width: 80%;
+        height: 80%;
+    }
+    #form > form{
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    #form > form>div{
+        width: 100%;
+        height: 80%;
+        display: grid;
+        grid-template-columns: auto auto;
+    }
+    #form > form > div > span{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        width: 100%;
+        height: 100%;
+        font-family: freestyle;
+        font-size: 5vw;
+        position: relative;
+    }
+    #form > form > div > span::after{
+        content: "";
+        display: block;
+        width: 20%;
+        height: 1%;
+        background-color: #803D3B;
+        position: absolute;
+        left: 12%;
+    }
+    #form > form > div > span::before{
+        content: "";
+        display: block;
+        width: 20%;
+        height: 1%;
+        background-color: #803D3B;
+        position: absolute;
+        right: 12%;
+    }
+    #form > form > div > span>input{
+        width: 20%;
+        text-align: center;
+        aspect-ratio: 4/1;
+        border: 2px solid #803D3B;
+    }
+    #form > form > div > span>input:focus{
+        border: 2px solid #803D3B;
+        outline: none;
+
+    }
+    #form > form>input{
+        display: block;
+        width: 20%;
+        aspect-ratio: 4/1;
+        margin-top: 3%;
+        margin-bottom: 3%;
+        border-radius: 20px;
+        font-family: Arabic;
+        font-size: 2vw;
+        border: none;
+        background-color: #803D3B;
+        color: white;
+        text-align: center;
+        line-height: 200%;
+        cursor: pointer;
+    }
+    #con{
+        width: 80%;
+        height: 80%;
+    }
+    form{
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row-reverse;
+    }
+    form > .left{
+        width: 40%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    form> .right{
+        width: 60%;
+        height: 68%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: flex-end;
+    }
+    .left >div{
+        width: 80%;
+        aspect-ratio: 1;
+        border: 5px solid #803D3B;
+        border-radius: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+}
+    .left>div>input{
+        display: none;
+    }
+    .left>div>label{
+        width: 20%;
+        aspect-ratio: 1;
+        text-align: center;
+        background-color: #803D3B;
+        line-height: 400%;
+        color: white;
+        border-radius: 100%;
+        cursor: pointer;
+    }
+    .left > input{
+        display: block;
+        width: 80%;
+        aspect-ratio: 6/1;
+        margin-top: 3%;
+        margin-bottom: 3%;
+        border-radius: 40px;
+        font-family: Arabic;
+        font-size: 2vw;
+        border: none;
+        background-color: #803D3B;
+        color: white;
+        text-align: center;
+        line-height: 200%;
+        cursor: pointer;
+    }
+    .right >input{
+    width: 97%;
+    aspect-ratio: 10/1;
+    border-radius: 60px;
+    font-family: Arabic;
+    font-size: 2vw;
+    direction: rtl;
+    background-color: #E4C59E;
+    border: none;
+    color: #322C2B;
+    padding-right: 3%;
+
+}
+.right> input::-webkit-outer-spin-button,
+.right> input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.right> input[type=number] {
+  -moz-appearance: textfield;
+}
+.right >select{
+    width: 100%;
+    aspect-ratio: 10/1;
+    border-radius: 60px;
+    font-family: Arabic;
+    font-size: 2vw;
+    direction: rtl;
+    background-color: #E4C59E;
+    border: none;
+    padding-right: 3%;
+    color: #756664;
+}
+.right> input::placeholder{
+    color: #756664;
+}
+.right >input:focus{
+    border: none;
+    outline: none;
+}
+.right>div{
+    width: 100%;
+    height: 40%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-family: Arabic;
+    font-size: 2vw;
+}
+.right > div input{
+    width: 50px;
+    aspect-ratio: 1;
+    text-align: center;
+    border: none;
+    border-radius: 10px;
+    background-color: #E4C59E   ;
+}
+.right > div input:focus{
+    border: none;
+    outline: none;
+}
+</style>
+{% endblock content %}

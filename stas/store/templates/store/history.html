@@ -1,0 +1,170 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+<div id="cart_header_container">
+    <h1>History</h1>
+</div>
+<div id="history">
+    <ul>
+        {% for order in orders %}
+        <li>
+            <div class="datas">
+                <p> 
+                    <span>{{order.date_orderd}}</span>
+                     :تاریخ سفارش
+                </p>
+                <p>
+                    <span>{{order.get_cart_total}}T</span>
+                    :مبلغ سفارش 
+                </p>
+                <p>
+                    <span>{{order.get_cart_items}}</span>
+                    :تعداد محصولات سفارش
+                </p>
+            </div>
+            <ul class="item_con">
+            {% for item in order.items %}
+            <li class="item" style="background-image: url({{item.product.image.url}});">
+                <span>{{item.quantity}}x</span>
+                <div>
+                    <h3>{{item.product.name}}</h3>
+                    <p>total: {{item.get_total}}T</p>
+                </div>
+            </li>
+            {% endfor %}
+            </ul>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+<style>
+#history{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 1%;
+}
+#history>ul{
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    list-style: none;
+    align-items: center;
+    flex-direction: column-reverse;
+
+}
+#history>ul>li{
+    width: 60%;
+    aspect-ratio: 5/1;
+    background-color: #E4C59E;
+    margin-top: 2%;
+
+}
+.datas{
+    width: 100%;
+    height: 20%;
+    background-color: #AF8260;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row-reverse;
+    align-items: center;
+    font-family: Arabic;
+    font-size: 1.3vw;
+    color: #322C2B;
+}
+.datas span{
+    font-family:freestyle;
+}
+#cart_header_container{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    #cart_header_container>h1{
+        font-size: 7vw;
+        font-family: freestyle;
+        position: relative;
+        font-weight: 300;
+    }
+    #cart_header_container::after{
+        content: "";
+        display: block;
+        width: 30%;
+        height: 1%;
+        background-color: #803D3B;
+        position: absolute;
+        left: 10%;
+    }
+    
+    #cart_header_container::before{
+        content: "";
+        display: block;
+        width: 30%;
+        height: 1%;
+        background-color: #803D3B;
+        position: absolute;
+        right: 10%;
+    }
+    .item_con{
+        width: 100%;
+        height: 80%;
+        list-style: none;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+    }
+    .item{
+        width: 10%;
+        aspect-ratio: 1;
+        margin-left: 1%;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        border: 2px solid #803D3B;
+        border-radius: 100%;
+        background-color: white;
+        position: relative;
+        cursor: pointer;
+    }
+    .item>span{
+        width: 35%;
+        aspect-ratio: 1;
+        background-color: #803D3B;
+        color: white;
+        border-radius: 100%;
+        position: absolute;
+        left: -6%;
+        top: -6%;
+        text-align: center;
+        font-family: freestyle;
+        font-size: 1.5vw;
+        line-height: 136%;
+        z-index: 5;
+    }
+    .item>div{
+        width: 100%;
+        height: 100%;
+        background-color: rgba(109, 109, 109,0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        border-radius: 100%;
+        font-family: freestyle;
+        color: #322C2B;
+        opacity: 0;
+        transition: 0.5s ease;
+    }
+    .item>div>h3{
+        font-size: 2.4vw;
+        font-weight: 300;
+    }
+    .item>div>p{
+        font-size: 1.5vw;
+    }
+    .item:hover div{
+        opacity: 100%;
+    }
+</style>
+{% endblock content %}

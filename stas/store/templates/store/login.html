@@ -1,0 +1,152 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+<div>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <div id="image_contain">
+        <span></span>
+        <p>حساب کاربری ندارید؟</p>
+        <a href="{% url 'signup' %}">ثبت نام</a>
+    </div>
+    <div id="form">
+        <h1>ورود به حساب کاربری</h1>
+        <form action="" method="POST">
+            {% csrf_token %}
+            <input type="text" name="username" placeholder="نام کاربری">
+            <input type="password" name="password" placeholder="گذرواژه">
+            <button type="submit" value="login">ورود</button>
+        </form>
+    </div>
+</div>
+<style>
+    main > div{
+    width: 100%;
+    aspect-ratio:9/4;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+main > div >span{
+    width: 80%;
+    display: block;
+    aspect-ratio: 120/1;
+    position: absolute;
+    background-color: yellowgreen;
+}
+main > div >span:nth-child(1){
+    right: 0;
+    top: 0;
+    background-color: #803D3B;
+}
+main > div >span:nth-child(2){
+    left: 0;
+    top: 3%;
+    background-color: #AF8260;
+}
+main > div >span:nth-child(3){
+    right: 0;
+    bottom: 3%;
+    background-color: #322C2B;
+}
+main > div >span:nth-child(4){
+    left: 0;
+    bottom: 0;
+    background-color: #E4C59E;
+}
+#image_contain{
+ width: 30%;
+ height: 80%;
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ align-items: center;
+ margin-right: 7%;
+}
+#image_contain>span{
+    display: block;
+    width: 100%;
+    aspect-ratio: 1;
+    background: url({% static "media/head.png" %});
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+#image_contain>p{
+    font-size: 2vw;
+    font-family: Arabic;
+}
+#image_contain>a{
+    display: block;
+    text-align: center;
+    line-height: 160%;
+    width: 100%;
+    height: 10%;
+    border-radius: 20px;
+    border: none;
+    background-color: #AF8260;
+    font-family: Arabic;
+    font-size: 2vw;
+    color: white;
+    cursor: pointer;
+}
+
+#form{
+ width: 35%;
+ height: 80%;
+ display: flex;
+ flex-direction: column;
+ justify-content: space-between;
+ align-items: center;
+}
+#form > h1{
+    height: 10%;
+    font-family: Arabic;
+    font-size: 5vw;
+}
+#form > form{
+    width: 100%;
+    height: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+#form > form>input{
+    width: 100%;
+    height: 20%;
+    border-radius: 27px;
+    font-family: Arabic;
+    font-size: 2vw;
+    direction: rtl;
+    background-color: #E4C59E;
+    border: none;
+    padding-right: 3%;
+    color: #322C2B;
+}
+#form > form > button{
+    width: 30%;
+    height: 15%;
+    border-radius: 25px;
+    border: none;
+    background-color: #803D3B;
+    font-family: Arabic;
+    font-size: 2vw;
+    color: white;
+    cursor: pointer;
+}
+#form > form>input::placeholder{
+    color: #756664;
+}
+#form > form>input:focus{
+    border: none;
+    outline: none;
+}
+
+</style>
+{% endblock content %}

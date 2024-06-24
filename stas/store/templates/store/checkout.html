@@ -1,0 +1,39 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+<div>
+    <a href="{% url 'cart' %}">back to cart</a>
+    <h2>summary</h2>
+    <table>
+        <tr>
+            <td></td>
+            <td>item</td>
+            <td>price</td>
+            <td>quantitiy</td>
+            <td>total</td>
+        </tr>
+        {% for item in items %}
+        <tr>
+            <td><img src="{{item.product.image.url}}" alt=""></td>
+            <td>{{item.product.name}}</td>
+            <td>{{item.product.price}}$</td>
+            {{item.quantity}}
+            </td>
+            <td>{{item.get_total}}$</td>
+        
+        </tr>
+    {% endfor %}
+    </table>
+    <strong>items:{{order.get_cart_items}}</strong>
+    <strong>total:{{order.get_cart_total}}$</strong>
+</div>
+<h6>shipping info</h6>
+<form action="" method="POST">
+    {% csrf_token %}
+    <input type="text" placeholder="adress..." name="address">
+    <input type="text" placeholder="state..." name="state">
+    <input type="text" placeholder="zipcode..." name="zipcode">
+    <input type="text" placeholder="city..." name="city">
+    <input type="submit" value="continiou">
+</form>
+{% endblock content %}
