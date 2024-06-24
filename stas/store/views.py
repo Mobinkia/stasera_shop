@@ -79,5 +79,24 @@ def login_page(request):
     except:
         return redirect('login')
 
+def signup(request):
+    if request.user.is_authenticated:
+        return redirect('store')
+    else:
+        form=CreateUserForm()
+        if request.method=="POST":
+            form=CreateUserForm(request.POST)
+            if form.is_valid():
+                form.save()
+                new_user_name=form['username'].value()
+                new_user_email=form['email'].value()
+                new_user_object=User.objects.filter(username=form['username'].value()).first()
+                Customer.objects.create(user=new_user_object,email=new_user_email,name=new_user_name)
+                return redirect('login')
+        categories=Category.objects.all()
+        context={'categories':categories,'form':form}
+        return render(request,'store/signup.html',context)
+@login_required(login_url='login')
+
 
 # Create your views here.
