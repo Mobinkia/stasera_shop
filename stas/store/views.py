@@ -128,5 +128,11 @@ def history(request):
     context={'categories':categories,'orders':orders}
     return render(request,'store/history.html',context) 
 
+def profile(request):
+    categories=Category.objects.all()
+    cusromer=Customer.objects.filter(name=request.user.username).first()
+    context={'categories':categories,'customer':cusromer}
+    return render(request,'store/profile.html',context)
+
 
 # Create your views here.
