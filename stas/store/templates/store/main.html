@@ -7,6 +7,7 @@
     <title>Stasera</title>
     <link rel="icon" type="image/x-icon" href="{% static 'media/main/sign/a.png' %}">
     <script>
+        var rl=true
         var  user='{{request.user}}';
         var loggedin=true;
         var isref=true;
@@ -64,14 +65,14 @@
     <div id="footer_logo"></div>
     <div id="link_list">
         <ul>
-            <li><a href="#">ارتباط با ما</a></li>
-            <li><a href="#">تاریخچه سفارشات</a></li>
-            <li><a href="#">رسیدگی به شکایات</a></li>
-            <li><a href="#">لیست مورد علاقه ها</a></li>
-            <li><a href="#">خبر ها</a></li>
-            <li><a href="#">آدرس</a></li>
-            <li><a href="#">نظرات</a></li>
-            <li><a href="#">صفحه شخصی</a></li>
+            <li><a href="{% url 'signup' %}">ثبت نام</a></li>
+            <li><a href="{% url 'login' %}">ورود</a></li>
+            <li><a href="{% url 'history' %}">تاریخچه سفارشات</a></li>
+            <li><a href="{% url 'cart' %}">سبد خرید</a></li>
+            <li><a href="{% url 'checkout' %}">تسویه حساب</a></li>
+            <li><a href="{% url 'store' %}">صفحه اصلی</a></li>
+            <li><a href="#">انتقادات</a></li>
+            <li><a href="{% url 'profile' %}">صفحه شخصی</a></li>
         </ul>
     </div>
     <div id="social">
@@ -368,7 +369,6 @@ footer{
     var activated_menu=false;
     var activated_menu1=false;
     function show_menu(){
-        console.log("s")
         if (activated_menu==false){
             activated_menu=true;
         sub_menu.classList.add("show");
@@ -411,7 +411,6 @@ footer{
     if (loggedin){document.getElementById("login").style.display='none';}
     else{document.getElementById("user_button").style.display='none';}
     cart_buttons=document.getElementsByClassName("cart_button");
-    console.log();
     for(i=0;i<cart_buttons.length;i=i+1){
         cart_buttons[i].addEventListener('click',function(){
             var ProductId=this.dataset.productid;
@@ -419,7 +418,6 @@ footer{
             if(loggedin){
                 updateUserOrder(ProductId,action)
             }else{
-                console.log('redirected to the login panel')
             }
         })
     }
@@ -433,9 +431,10 @@ footer{
             return response.json()
         })
         .then((data)=>{
-            console.log('data:',data)
             if(isref){
+                if (rl==true){
                 location.reload();
+                }
             }
         })
     }
