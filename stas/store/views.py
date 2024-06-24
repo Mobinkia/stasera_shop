@@ -175,5 +175,13 @@ def addproduct(request):
     else:
         return HttpResponse(status=403)
 
+def show(request):
+    if request.user.is_superuser:
+        categories=Category.objects.all()
+        products=Product.objects.all()
+        context={'categories':categories,'products':products}
+        return render(request,'store/show.html',context)   
+    else:
+        return HttpResponse(status=403)
 
 # Create your views here.
