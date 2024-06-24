@@ -54,7 +54,7 @@
         <h2 class="freestyle">Crew</h2>
     </div>
     <div id="team_content">
-        <span style="border-color: #E4C59E;background-image: url({% static 'media/staff/shahab.jpg' %});"><span>
+        <span style="border-color: #E4C59E;background-image: url({% static 'media/staff/shahaba.jpg' %});"><span>
             <h2>Shahab</h2>
             <p>Tech</p>
         </span></span>
@@ -62,11 +62,11 @@
             <h2>Mobin</h2>
             <p>Media</p>
         </span></span>
-        <span style="border-color: #AF8260;"><span>
+        <span style="border-color: #AF8260;background-image: url({% static 'media/staff/bahar.jpg' %});"><span>
             <h2>Bahar</h2>
             <p>Finance</p>
         </span></span>
-        <span style="border-color: #322C2B;background-image: url({% static 'media/staff/ara.jpg' %});"><span>
+        <span style="border-color: #322C2B;background-image: url({% static 'media/staff/araa.jpg' %});"><span>
             <h2>ArA</h2>
             <p>Barista</p>
         </span></span>
@@ -621,7 +621,6 @@ position: relative;
     var divs=document.querySelectorAll("#slider_content > div");
     var h2s=document.querySelectorAll("#slider_heading > h2");
     var ps=document.querySelectorAll("#paragraph > p");
-    console.log(ps)
     var slides=divs.length;
     var user_button=document.getElementById("user_button");
     var sub_menu=document.getElementById("user_submenu");
@@ -748,7 +747,6 @@ position: relative;
           },6000)
           });
     cart_buttons=document.getElementsByClassName("cart_button");
-    console.log();
     for(i=0;i<cart_buttons.length;i=i+1){
         cart_buttons[i].addEventListener('click',function(){
             var ele=this;
@@ -757,9 +755,7 @@ position: relative;
             setTimeout(function(){
                 ele.classList.remove('loading');
                 ele.disabled=false;
-                console.log('finishllll')
             },2000)
-            console.log(this);
         })
     }
 </script>
