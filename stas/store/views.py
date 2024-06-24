@@ -60,5 +60,24 @@ def checkout(request):
         Order.objects.create(customer=customer)
         return redirect('store')
 
+def login_page(request):
+    if request.method== 'GET':
+        categories=Category.objects.all()
+        context={'categories':categories}
+        return render(request,'store/login.html',context)
+    elif request.method=='POST':
+        username=request.POST.get('username')
+        password=request.POST.get('password')
+    try:
+        user=User.objects.get(username=username)
+        if user is not None and user.check_password(password):
+            login(request,user)
+        if user.is_superuser:
+            return redirect('panel')
+        else:
+            return redirect('store')
+    except:
+        return redirect('login')
+
 
 # Create your views here.
