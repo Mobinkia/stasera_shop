@@ -184,4 +184,28 @@ def show(request):
     else:
         return HttpResponse(status=403)
 
+def storage(request):
+    if request.user.is_superuser:
+        if request.method=='GET':
+            categories=Category.objects.all()
+            storages=Storage.objects.all()
+            context={'categories':categories,'storages':storages}
+            return render(request,'store/storage.html',context) 
+        if request.method=='POST':
+            sugar=Storage.objects.get(name='sugar')
+            sugar.amount=request.POST.get('sugar')
+            sugar.save()
+            coffee=Storage.objects.get(name='coffee')
+            coffee.amount=request.POST.get('coffee')
+            coffee.save()
+            flour=Storage.objects.get(name='flour')
+            flour.amount=request.POST.get('flour')
+            flour.save()
+            chocolate=Storage.objects.get(name='chocolate')
+            chocolate.amount=request.POST.get('chocolate')
+            chocolate.save()
+            return redirect('storage')
+    else:
+        return HttpResponse(status=403)
+
 # Create your views here.
