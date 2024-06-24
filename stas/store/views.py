@@ -98,5 +98,9 @@ def signup(request):
         return render(request,'store/signup.html',context)
 @login_required(login_url='login')
 
+def logout_page(request):
+    logout(request)
+    return redirect('store')
+
 
 # Create your views here.
